@@ -1,0 +1,13 @@
+<form action="" method="post">
+
+    {% csrf_token %}
+
+    <input type="email", name="email", id="emailInput", placeholder="Enter your email", value="{{ form.email.value|default_if_none:''}}"><br>    
+    <input type="text", name="username", id="usernameInput", placeholder="Enter you username", value="{{ form.username.value|default_if_none:''}}"><br>
+    
+    <input type="password" name="password1" id="password1Input", placeholder="Password"><br>
+    {{ form.password1.errors }}
+    <input type="password" name="password2" id="password2Input", placeholder="Repeat the password"><br>
+    {{ form.password2.errors }}
+    <button type="submit">Create user</button>
+</form>

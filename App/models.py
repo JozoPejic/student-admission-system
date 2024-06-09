@@ -22,3 +22,4 @@ class Upis(models.Model):
     student = models.ForeignKey(Korisnik, on_delete=models.CASCADE)
     predmet = models.ForeignKey(Predmeti, on_delete=models.CASCADE)
     status = models.CharField(max_length=50, choices=STATUS, default='Not') 
+
