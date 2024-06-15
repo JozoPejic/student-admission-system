@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uredi profesora</title>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+
+        <input type="text", name="username", value="{{ profesor.username }}"><br>
+        <input type="text", name="first_name", value="{{ profesor.first_name }}"><br>
+        <input type="text", name="last_name", value="{{ profesor.last_name }}"><br>
+        <input type="email" name="email" id="", value="{{ profesor.email }}"><br>
+        <label for="status">Status:</label>
+        <select name="status">
+            {% for value, display in profesor.STATUS %}
+                <option value="{{ value }}" {% if profesor.status == value %} selected {% endif %}>{{ display }}</option>
+            {% endfor %}
+        </select><br>
+        <select name="role">
+            {% for value, display in profesor.ROLES %}
+                <option value="{{ value }}" {% if profesor.role == value %} selected {% endif %}>{{ display }}</option>
+            {% endfor %}
+        </select><br>
+        <button type="submit">Spremi promjene</button><br>
+
+        {{ form.errors }}
+    </form>
+</body>
+</html>

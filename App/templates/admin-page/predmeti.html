@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predmeti</title>
+</head>
+<body>
+    <h1>Lista Predmeta</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Naziv</th>
+                <th>Kod</th>
+                <th>Program</th>
+                <th>ECTS</th>
+                <th>Semestar (Redovni)</th>
+                <th>Semestar (Izvanredni)</th>
+                <th>Izborni</th>
+                <th>Nositelj</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for predmet in predmeti %}
+            <tr>
+                <td>{{ predmet.id }}</td>
+                <td>{{ predmet.name }}</td>
+                <td>{{ predmet.kod }}</td>
+                <td>{{ predmet.program }}</td>
+                <td>{{ predmet.ects }}</td>
+                <td>{{ predmet.sem_red }}</td>
+                <td>{{ predmet.sem_izv }}</td>
+                <td>{{ predmet.izborni }}</td>
+                <td>{{ predmet.nositelj.username }}</td>
+                <td><a href="{% url 'uredi_predmet' predmet.id %}">Uredi</a></td>
+                <td><a href="{% url 'izbrisi_predmet' predmet.id %}">Izbrisi</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

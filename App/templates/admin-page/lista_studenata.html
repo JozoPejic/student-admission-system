@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="", method="post">
+        {% csrf_token %}
+
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Ime</th>
+                    <th>Prezime</th>
+                    <th>Korisnicko ime</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in studenti %}
+                <tr>
+                    <th>{{ student.first_name }}</th>
+                    <th>{{ student.last_name }}</th>
+                    <th>{{ student.username }}</th>
+                    <th>{{ student.email }}</th>
+                    <th>{{ student.status }}</th>
+                    <th><a href="{% url 'uredi_studenta' student.id %}">Uredi</a></th>
+                    <th><a href="{% url 'izbrisi_studenta' student.id %}">Ukloni</a></th>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+
+        <input type="text", name="username", value="{{ student.username }}"><br>
+        <input type="text", name="first_name", value="{{ student.first_name }}"><br>
+        <input type="text", name="last_name", value="{{ student.last_name }}"><br>
+        <input type="email" name="email" id="", value="{{ student.email }}"><br>
+        <label for="status">Status:</label>
+        <select name="status">
+            {% for value, display in student.STATUS %}
+                <option value="{{ value }}" {% if student.status == value %} selected {% endif %}>{{ display }}</option>
+            {% endfor %}
+        </select><br>
+        <select name="role">
+            {% for value, display in student.ROLES %}
+                <option value="{{ value }}" {% if student.role == value %} selected {% endif %}>{{ display }}</option>
+            {% endfor %}
+        </select><br>
+        <button type="submit">Spremi promjene</button><br>
+        <a href="{% url 'resetiraj_lozinku' student.id %}">Promijeni lozinku</a>
+
+        {{ form.errors }}
+    </form>
+</body>
+</html>
