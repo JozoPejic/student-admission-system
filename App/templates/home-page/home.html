@@ -4,10 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .btn {
+            padding: 15px 25px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+        }
+        .btn-login {
+            background-color: #007bff;
+        }
+        .btn-register {
+            background-color: #007bff;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        footer p {
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
-    
-    <p>Hello</p>
-    <a href="{% url 'login' %}"><button>Login</button></a>
+    <div class="container">
+        <a href="{% url 'login' %}"><button class="btn btn-login">Login</button></a>
+        <a href="{% url 'registration' %}"><button class="btn btn-register">Register</button></a>
+    </div>
+    <footer>
+        <p>&copy; 2024 Student enrollment. All rights reserved.</p>
+    </footer>
 </body>
 </html>

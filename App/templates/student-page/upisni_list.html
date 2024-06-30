@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upisni List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .left-column, .right-column {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .left-column {
+            width: 35%;
+            margin-right: 20px;
+        }
+        .right-column {
+            width: 60%;
+        }
+        h2 {
+            text-align: center;
+            font-size: 1.5em;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        form {
+            display: inline;
+        }
+        button {
+            padding: 5px 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .semester {
+            margin-top: 20px;
+            padding: 10px;
+            border-top: 2px solid #007BFF;
+        }
+    </style>
+</head>
+<body>
+    {% csrf_token %}
+    <div class="left-column">
+        <h2>Neupisani predmeti</h2>
+        <ul>
+            {% for predmet in neupisani_predmeti %}
+                <li>
+                    {{ predmet.name }}
+                    <form method="post">
+                        {% csrf_token %}
+                        <button type="submit" name="upisi_predmet" value="{{ predmet.id }}">Upiši</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="right-column">
+        <h2>Upisani predmeti po semestrima</h2>
+        {% for semestar, data in predmeti_po_sem.items %}
+            <div class="semester">
+                <h3>Semestar {{ semestar }}</h3>
+                <ul>
+                    {% for upis in data.upisani %}
+                        <li>
+                            {{ upis.predmet.name }}
+                            <form method="post">
+                                {% csrf_token %}
+                                <button type="submit" name="update_status" value="{{ upis.id }}">
+                                    {% if upis.status == 'Enr' %}
+                                        Položi
+                                    {% elif upis.status == 'Pass' %}
+                                        Položeno
+                                    {% endif %}
+                                </button>
+                                {% if upis.status == 'Enr' %}
+                                    <button type="submit" name="remove_predmet" value="{{ upis.id }}" onclick="return confirm('Jeste li sigurni da želite ispisati ovaj predmet?')">X</button>
+                                {% endif %}
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+    </div>
+    <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Odjava</button>
+    </form>
+</body>
+</html>

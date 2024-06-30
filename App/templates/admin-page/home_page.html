@@ -4,6 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administrator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+        }
+        button {
+            display: block;
+            width: 200px;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
     <script>
         function openLink(url) {
             window.location.href = url;
@@ -11,9 +36,15 @@
     </script>
 </head>
 <body>
-    <button onclick="openLink('predmeti')">Lista predmeta</button><br>
-    <button onclick="openLink('lista_profesora')">Lista profesora</button><br>
-    <button onclick="openLink('lista_studenata')">Lista studenata</button><br>
-
+    {% csrf_token %}
+    <button onclick="openLink('/admin-page/predmeti')">Lista predmeta</button>
+    <button onclick="openLink('/admin-page/lista_profesora')">Lista profesora</button>
+    <button onclick="openLink('/admin-page/lista_studenata')">Lista studenata</button>
+    <button onclick="openLink('/admin-page/dodaj_korisnika')">Dodaj korisnika</button>
+    <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Odjava</button>
+    </form>
+    
 </body>
 </html>

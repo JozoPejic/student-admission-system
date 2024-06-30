@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predmeti</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        a {
+            text-decoration: none;
+            color: #007BFF;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    {% csrf_token %}
+    <h1>Lista Predmeta za {{ profesor.first_name }} {{ profesor.last_name }}</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Naziv</th>
+                <th>Kod</th>
+                <th>Program</th>
+                <th>ECTS</th>
+                <th>Semestar (Redovni)</th>
+                <th>Semestar (Izvanredni)</th>
+                <th>Izborni</th>
+                <th>Nositelj</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for predmet in predmeti %}
+            <tr>
+                <td>{{ predmet.id }}</td>
+                <td>{{ predmet.name }}</td>
+                <td>{{ predmet.kod }}</td>
+                <td>{{ predmet.program }}</td>
+                <td>{{ predmet.ects }}</td>
+                <td>{{ predmet.sem_red }}</td>
+                <td>{{ predmet.sem_izv }}</td>
+                <td>{{ predmet.izborni }}</td>
+                <td>{{ predmet.nositelj.username }}</td>
+                <td><a href="{% url 'popis_studenata_predmeti' predmet.id %}">Popis studenata</a></td>
+                <td><a href="{% url 'students_lost_signature' predmet.id %}">Studenti koji su izgubili potpis</a></td>
+                <td><a href="{% url 'students_got_signature' predmet.id %}">Studenti koji su dobili potpis</a></td>
+                <td><a href="{% url 'students_passed' predmet.id %}">Studenti koji su položili predmet</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Odjava</button>
+    </form>
+</body>
+</html>

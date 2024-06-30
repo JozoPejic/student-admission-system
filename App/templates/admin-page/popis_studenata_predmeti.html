@@ -3,17 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista Predmeta</title>
+    <title>Popis studenata za predmet: {{ predmet.name }}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f7f7f7;
             margin: 0;
             padding: 20px;
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
         }
         table {
             width: 100%;
@@ -45,44 +41,28 @@
 </head>
 <body>
     {% csrf_token %}
-<h1>Lista Predmeta</h1>
+<h2>Popis studenata za predmet: {{ predmet.name }}</h2>
 
 <table border="1">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Naziv</th>
-            <th>Kod</th>
-            <th>Program</th>
-            <th>ECTS</th>
-            <th>Semestar (Redovni)</th>
-            <th>Semestar (Izvanredni)</th>
-            <th>Izborni</th>
-            <th>Nositelj</th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th>Ime</th>
+            <th>Prezime</th>
+            <th>Email</th>
         </tr>
     </thead>
     <tbody>
-        {% for predmet in predmeti %}
+        {% for upis in upisani_studenti %}
         <tr>
-            <td>{{ predmet.id }}</td>
-            <td>{{ predmet.name }}</td>
-            <td>{{ predmet.kod }}</td>
-            <td>{{ predmet.program }}</td>
-            <td>{{ predmet.ects }}</td>
-            <td>{{ predmet.sem_red }}</td>
-            <td>{{ predmet.sem_izv }}</td>
-            <td>{{ predmet.izborni }}</td>
-            <td>{{ predmet.nositelj.username }}</td>
-            <td><a href="{% url 'uredi_predmet' predmet.id %}">Uredi</a></td>
-            <td><a href="{% url 'izbrisi_predmet' predmet.id %}">Izbrisi</a></td>
-            <td><a href="{% url 'popis_studenata' predmet.id %}">Popis studenata</a></td>
+            <td>{{ upis.student.first_name }}</td>
+            <td>{{ upis.student.last_name }}</td>
+            <td>{{ upis.student.email }}</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+
+<a href="{% url 'predmeti' %}">Povratak na popis predmeta</a>
 
 </body>
 </html>

@@ -3,36 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Lista Profesora</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <form action="", method="post">
-        {% csrf_token %}
+    {% csrf_token %}
+    <table>
+        <thead>
+            <tr>
+                <th>Ime</th>
+                <th>Prezime</th>
+                <th>Korisničko ime</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Akcije</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for profesor in profesori %}
+            <tr>
+                <td>{{ profesor.first_name }}</td>
+                <td>{{ profesor.last_name }}</td>
+                <td>{{ profesor.username }}</td>
+                <td>{{ profesor.email }}</td>
+                <td>{{ profesor.status }}</td>
+                <td>
+                    <a href="{% url 'uredi_profesora' profesor.id %}">Uredi</a> |
+                    <a href="{% url 'izbrisi_profesora' profesor.id %}">Izbriši</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Ime</th>
-                    <th>Prezime</th>
-                    <th>Korisnicko ime</th>
-                    <th>Email</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for profesor in profesori %}
-                <tr>
-                    <th>{{ profesor.first_name }}</th>
-                    <th>{{ profesor.last_name }}</th>
-                    <th>{{ profesor.username }}</th>
-                    <th>{{ profesor.email }}</th>
-                    <th>{{ profesor.status }}</th>
-                    <th><a href="{% url 'uredi_profesora' profesor.id %}">Uredi</a></th>
-                    <th><a href="{% url 'izbrisi_profesora' profesor.id %}">Izbrisi</a></th>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </form>
+    <button><a href="{% url 'dodaj_korisnika' %}" style="color: white; text-decoration: none;">Dodaj profesora</a></button>
 </body>
 </html>

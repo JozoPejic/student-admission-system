@@ -25,7 +25,7 @@ class RegistrationForm(UserCreationForm):
 
     class Meta:
         model = Korisnik
-        fields = ('email', 'username', 'password1', 'password2')
+        fields = ('first_name', 'last_name', 'email', 'username', 'password1', 'password2')
 
     def clean_email(self):
         email = self.cleaned_data.get('email').lower()
@@ -52,11 +52,21 @@ class DodajPredmet(ModelForm):
 
 class DodajKorisnika(ModelForm):
 
+    password = forms.CharField(widget=forms.PasswordInput, label="Password")
+
     class Meta:
         model = Korisnik
-        fields = ['first_name', 'last_name', 'username', 'email', 'status', 'role', 'is_superuser']
+        fields = ['first_name', 'last_name', 'username', 'email', 'password', 'status', 'role', 'is_superuser']
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data["password"])
+        if commit:
+            user.save()
+        return user
 
 class PromijeniLozinku(forms.Form):
+
     nova_lozinka = forms.CharField(widget=forms.PasswordInput)
     potvrda_lozinke = forms.CharField(widget=forms.PasswordInput)
 
@@ -69,3 +79,11 @@ class PromijeniLozinku(forms.Form):
             raise forms.ValidationError("Lozinke se ne podudaraju!")
         
         return cleaned_data
+
+class UpisForma(forms.ModelForm):
+
+    predmeti = forms.ModelMultipleChoiceField(queryset=Predmeti.objects.all(), widget=forms.CheckboxSelectMultiple)
+
+    class Meta:
+        model = Upis
+        fields = ['predmeti']

@@ -4,24 +4,83 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        p.error-message {
+            color: red;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
-    <h2>Login</h2>
-
     <form action="" method="post">
 
         {% csrf_token %}
 
+        <h2>Login</h2>
+
         {% if form.errors %}
             {% for key, value in form.errors.items %}
                 {% if key == '__all__' %}
-                    <p>{{ value }}</p>
+                    <p class="error-message">{{ value }}</p>
                 {% endif %}
             {% endfor %}
         {% endif %}
 
-        <input type="text" name="username" id="username">Username <br><br>
-        <input type="password" name="password" id="password">Password <br><br>
+        <input type="text" name="username" id="username" placeholder="Username"><br><br>
+        <input type="password" name="password" id="password" placeholder="Password"><br><br>
         <input type="submit" value="Login">
     </form>
 </body>

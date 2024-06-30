@@ -16,6 +16,9 @@ class Predmeti(models.Model):
     sem_izv = models.IntegerField()
     izborni = models.CharField(choices=[('Da', 'da'), ('Ne', 'ne')], max_length=10)
     nositelj = models.ForeignKey(Korisnik, on_delete=models.CASCADE, null=True)
+    
+    def __str__(self):
+        return f"{self.name} ({self.kod})"
 
 class Upis(models.Model):
     STATUS = (('Not', 'Not Enrolled'), ('Pass', 'Passed'), ('Enr', 'Enrolled'), ('Fail', 'Failed'))
@@ -23,3 +26,7 @@ class Upis(models.Model):
     predmet = models.ForeignKey(Predmeti, on_delete=models.CASCADE)
     status = models.CharField(max_length=50, choices=STATUS, default='Not') 
 
+    def promijeni_status(self, novi_status):
+        if novi_status in dict(self.STATUS):
+            self.status = novi_status
+            self.save()

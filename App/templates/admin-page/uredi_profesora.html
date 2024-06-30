@@ -25,6 +25,7 @@
             {% endfor %}
         </select><br>
         <button type="submit">Spremi promjene</button><br>
+        <a href="{% url 'resetiraj_lozinku' profesor.id %}">Promijeni lozinku</a>
 
         {{ form.errors }}
     </form>
