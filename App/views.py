@@ -22,7 +22,7 @@ def login_view(request):
                 login(request, user)
 
                 if user.role == 'Stu':
-                    student_id = user.id  # Promijeni ovo na pravi atribut ako je drugačije
+                    student_id = user.id  
                     return redirect(reverse('upisni_list', kwargs={'student_id': student_id}))
                 elif user.role == 'Prof':
                     return redirect(reverse('popis_predmeta_profesor', kwargs={'profesor_id': user.id}))
@@ -330,7 +330,7 @@ def popis_studenata_predmet_profesor(request, predmet_id):
             upis = get_object_or_404(Upis, id=upis_id)
             
             if action_type == 'Passed':
-                if upis.status != 'Fail':  # Samo ako student nije izgubio pravo
+                if upis.status != 'Fail':  
                     upis.status = 'Pass'
             elif action_type == 'Failed':
                 upis.status = 'Fail'
